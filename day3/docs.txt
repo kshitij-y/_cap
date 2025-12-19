@@ -7,11 +7,28 @@ double  8 byte
 char    2 byte
 boolean 1 bit
 
-keywords
-Indentifiers
-Literals
-Datatypes
-Variables
-Separator
-Operators
-Comments
+# Datatypes
+    keywords
+    Indentifiers
+    Literals
+    Datatypes
+    Variables
+    Separator
+    Operators
+    Comments
+
+# Operators
+    Unary Operators
+        increment Operators
+        decrement Operators
+        Logical Not Operators
+    Binary Operators
+        Arithmetic 
+        Relational
+        Logical AND
+        Logical OR
+    Ternary Operators
+        Conditional Operators
+
+Q. diff b\w Preincrement & Postincrement
+Q. diff b\w Pre& post decrement
