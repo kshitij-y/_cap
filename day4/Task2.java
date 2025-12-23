@@ -140,20 +140,15 @@ class Task2 {
             discount_amnt = fare * .5;
         }
 
+
+        //booking Status
         if(fare >= 10000){
-            if(tType == 3){
-                isBooked = "Booking Confirmed";
-            } else {
-                // System.out.println("Waiting list");
-                isBooked = "Waiting list";
-            }
-        } else {
-            // System.out.println("Booking Confirmed");
-            isBooked = "Booking Confirmed";
-        }
+            if(tType == 3) isBooked = "Booking Confirmed";
+            else isBooked = "Waiting list";
+        } else isBooked = "Booking Confirmed";
 
         System.out.println("===============================");
-        System.out.println("========Booking Details========");
+        System.out.println("=======<Booking Details>=======");
         System.out.println("===============================");
 
         System.out.println("Id:\t\t" + id);
