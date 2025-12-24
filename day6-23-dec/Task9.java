@@ -13,7 +13,7 @@ class Task9 {
         }
         return true;
     }
-    
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a number: ");
@@ -30,4 +30,4 @@ class Task9 {
         System.out.print("\nTotal number of primes: " + count);
         
     }
-}
+} 
