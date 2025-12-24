@@ -11,7 +11,7 @@ class Task18 {
         int a = 0;
         int b = 1;
         System.out.print("0 1 ");
-        int c = 1;
+        int c;
         while(n-2 > 0){
             c = a+b;
             System.out.print(c+ " ");
