@@ -1,0 +1,19 @@
+Typecasting:
+    conversion of one dataype to another
+
+    Types:
+        1. primitive Typecasting        [primitive <=> primitive]
+        2. non primitive Typecasting    [non primitive <=> non primitive]
+
+    1. primitive:
+        widening => smaller to bigger datatypes
+        narrowing => bigger to smaller datatypes
+        flow :
+            byte -> short -> int -> long(8) -> float(4) -> double
+            char -> int -> long(8) -> float(4) -> double
+
+    2. Non primitive
+        upcasting => subclass to superclass
+        downcasting => superclass tp subclass
+
+        
