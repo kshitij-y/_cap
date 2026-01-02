@@ -1,0 +1,21 @@
+Encapsulation:
+    the binding or wrapping the state and behaviors of an object is called as Encapsulation
+
+    state -> variables
+    behaviors -> methods
+
+    why? : to achieve data hinding.
+    data hiding: the process of hiding direct access by providing controlled access
+
+    How to avoid direct access?
+        using private access modifier / specifier
+        private is a keyword
+        if we make any member as private we can not use that variable directly in diff class.
+
+    How to provide controlled access?
+        using getter and setter
+
+        getter -> used to get or retrive private variable;
+        setter -> used to set or modify private variable
+
+        
