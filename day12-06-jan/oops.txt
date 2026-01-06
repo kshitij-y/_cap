@@ -1,0 +1,9 @@
+types of relationships in java:
+    1. HAS-A relationships
+    2. IS-A relationships
+
+    HAS-A relationships:
+        aggregation: is a weak HAS-A relationships where child object is created outside the parent class and can exist independently
+
+        compostion: is a strong HAS-A relationships where the parent class creates and owns the child object,  and the child canot exist independently
+        
