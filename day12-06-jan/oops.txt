@@ -1,9 +1,63 @@
-types of relationships in java:
-    1. HAS-A relationships
-    2. IS-A relationships
+Types of Relationships in Java
 
-    HAS-A relationships:
-        aggregation: is a weak HAS-A relationships where child object is created outside the parent class and can exist independently
+1. HAS-A Relationship
+2. IS-A Relationship
 
-        compostion: is a strong HAS-A relationships where the parent class creates and owns the child object,  and the child canot exist independently
-        
+
+HAS-A Relationship
+------------------
+Represents object ownership or association.
+
+a) Aggregation
+   → Weak HAS-A relationship.
+   → Child object is created outside the parent class.
+   → Child object can exist independently of the parent.
+
+b) Composition
+   → Strong HAS-A relationship.
+   → Parent class creates and owns the child object.
+   → Child object cannot exist independently.
+
+
+IS-A Relationship
+-----------------
+Represents inheritance using the `extends` keyword.
+
+
+Rules of super Calling Statement
+--------------------------------
+1. `super()` is a constructor calling statement.
+   It is used to call the constructor of the superclass.
+
+2. `super()` must be the first statement inside a constructor.
+
+3. If the programmer does not write `super()`,
+   the compiler automatically inserts a no-argument `super()` call.
+
+4. `this()` and `super()` cannot be used together
+   inside the same constructor.
+
+5. Only one `super()` call is allowed in a constructor.
+
+
+
+Q1. super vs this calling statement
+
+Types of Inheritance:
+
+1. Single-level Inheritance
+   → One class inherits from only one superclass.
+
+2. Multi-level Inheritance (not acheivable in java with help of class becs of daimond problem)
+   → A class inherits from another class,
+     which itself inherits from another superclass
+     (inheritance at different levels).
+
+3. Hierarchical Inheritance
+   → One superclass is inherited by
+     multiple subclasses at the same level.
+
+4. Hybrid Inheritance
+    → Conbination of any two
+
+# to acheive multiple inheritance in java we have to use [interface]

@@ -1,0 +1,13 @@
+1.  interface is a keyword.
+2.  it is sued to create non-primitive dada-types.
+3.  It is used to achieve 100% of abstraction.
+4.  It is used to achieve 100% of inhertance.
+5.  To inherit interface into class we use "implements" keyword.
+6.  With the help of implements keyword we can inherit more than one interface.
+7.  We cannot create an object of interface.
+8.  interface we cannot create [static initializer block].
+9.  All the noon-static method are already prefixed with abstract and public keyword.
+10. in interface All the var are already prefixed with final and static keyword.
+11. If any var are initialized with final keyword then we cannot re-initialize it.
+12. static method of interface can be access only static way.
+13. [extends] -> inherit an interface into another interface
