@@ -1,21 +1,54 @@
 public class Banking{
     public static void main(String[] args) {
-        Account acc1 = new Account(555);
-        Account acc2 = new Account(555);
+        BankAccount b1 = new BankAccount(101, "John", 5000);
+        BankService service = new BankService();
 
-        System.out.println(acc1.hashCode() == acc2.hashCode());
+        try {
+            service.withdraw(b1, 101, 7000);
+        } catch (InsufficientbalanceException | InvalidAccountException e){
+            System.out.println("Transaction Failed!");
+            System.out.println(e.getMessage());
+        }
     }
 }
 
-class Account {
-    int accNo;
+class BankAccount {
+    int accNO;
+    String name;
+    double bal;
 
-    Account(int accNo){
-        this.accNo = accNo;
+    BankAccount(int accNO, String name, double bal) {
+        this.accNO = accNO;
+        this.name = name;
+        this.bal = bal;
     }
+    
+}
 
-    @Override
-    public int hashCode(){
-        return this.accNo;
+class BankService  {
+    public void withdraw(BankAccount account, int accNO, double amt)
+        throws InvalidAccountException, InsufficientbalanceException
+    {
+        if(accNO != 101){
+            throw new InvalidAccountException();
+        }
+        if(amt > account.bal){
+            throw new InsufficientbalanceException(account.bal);
+        }
+
+        account.bal -= amt;
+        System.out.println("Transation Successfull.");
+    }
+}
+
+class InvalidAccountException extends Exception {
+    public InvalidAccountException() {
+        super("Invalid account number");
+    }
+}
+
+class InsufficientbalanceException extends Exception {
+    public InsufficientbalanceException(double bal) {
+        super("Reason: Insufficient balance. Available balance: "+ bal);
     }
 }
