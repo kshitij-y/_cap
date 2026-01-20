@@ -3,116 +3,114 @@
 ## 1. Functional Programming in Java
 
 ### What is Functional Programming?
+Functional programming is a **declarative** programming paradigm. Unlike Object-Oriented Programming (OOP), which focuses on objects and state, functional programming focuses on operations, functions, and immutability.
 
-Functional programming is a programming style where programs are written using **functions** and **expressions**, avoiding frequent changes to data (immutability).
-The focus is on **what to do** rather than **how to do it**.
+*   **Imperative (OOP):** Focuses on **HOW** to perform a task (step-by-step state changes).
+*   **Declarative (Functional):** Focuses on **WHAT** result is required.
 
 ### Why Java 8 Introduced Functional Programming Features
+Before Java 8, Java was purely Object-Oriented. Java 8 introduced these concepts to address modern programming needs:
 
-Java 8 introduced functional programming concepts to make Java:
-
-* **Shorter** – Less boilerplate code
-* **Cleaner** – More readable and expressive
-* **Faster** – Better performance using streams and parallelism
-* **Modern** – Comparable with modern programming languages
+1.  **Conciseness (Shorter):** Reduces "boilerplate" code (repetitive code like anonymous inner classes).
+2.  **Readability (Cleaner):** Code expresses the *intent* of the business logic rather than the mechanics of iteration.
+3.  **Concurrency (Faster):** Facilitates parallel programming automatically via the **Stream API**.
+4.  **Modernization:** Keeps Java competitive with functional languages like Scala, Kotlin, and Python.
 
 ---
 
-## 2. How Java Became Shorter, Cleaner, Faster, and Modern
+## 2. Evolution: Shorter, Cleaner, Faster, and Modern
 
-### Shorter Code
+### Shorter Code (Boilerplate Reduction)
+The most visible change is the replacement of Anonymous Inner Classes with Lambda Expressions.
 
-Anonymous classes were replaced by lambda expressions.
-
-**Before Java 8**
-
+**Before Java 8 (Anonymous Class):**
 ```java
-new Thread(new Runnable() {
+// We have to instantiate an interface and override the method manually
+Runnable r = new Runnable() {
+    @Override
     public void run() {
-        System.out.println("Thread running");
+        System.out.println("Thread running inside Anonymous Class");
     }
-}).start();
+};
+new Thread(r).start();
 ```
 
-**After Java 8**
-
+**After Java 8 (Lambda Expression):**
 ```java
-new Thread(() -> System.out.println("Thread running")).start();
+// The compiler infers the interface and method structure
+Runnable r = () -> System.out.println("Thread running inside Lambda");
+new Thread(r).start();
 ```
 
----
+### Cleaner Code (Declarative Style)
+Pre-Java 8 required external loops (for-loops). Java 8 uses internal iteration via Streams.
 
-### Cleaner Code
-
-Business logic is more visible and easier to understand.
-
+**Imperative Style (Old):**
 ```java
-list.forEach(item -> System.out.println(item));
-```
-
----
-
-### Faster Execution
-
-Streams support parallel processing, improving CPU utilization.
-
-```java
-list.parallelStream().forEach(System.out::println);
-```
-
----
-
-### More Modern Features
-
-Java 8 introduced:
-
-* Lambda expressions
-* Functional interfaces
-* Stream API
-* Method references
-* Optional class
-
----
-
-## 3. Functional Interface
-
-### Definition
-
-A **functional interface** is an interface that contains:
-
-* **Exactly one abstract method**
-* Any number of **default methods**
-* Any number of **static methods**
-
-### Why Functional Interfaces Are Needed
-
-* Lambda expressions work **only with functional interfaces**
-* A lambda expression needs **one target abstract method** to implement
-
----
-
-### Example of Functional Interface
-
-```java
-@FunctionalInterface
-interface Calculator {
-    int add(int a, int b);
-
-    default void info() {
-        System.out.println("Calculator Interface");
-    }
-
-    static void version() {
-        System.out.println("Version 1.0");
+for(String item : list) {
+    if(item.length() > 3) {
+        System.out.println(item);
     }
 }
 ```
 
-### Using Lambda Expression
+**Functional Style (New):**
+```java
+// Reads like English: Filter items length > 3, then print.
+list.stream()
+    .filter(item -> item.length() > 3)
+    .forEach(System.out::println);
+```
+
+### Faster Execution (Parallelism)
+Functional programming enables the **Stream API** to split data into chunks and process them in parallel threads easily without manual thread management.
 
 ```java
-Calculator c = (a, b) -> a + b;
-System.out.println(c.add(10, 20));
+// .parallelStream() automatically utilizes multiple CPU cores
+list.parallelStream().forEach(item -> processItem(item));
+```
+
+---
+
+## 3. Functional Interface (The Core Concept)
+
+### Detailed Definition
+A **Functional Interface** (also known as SAM - Single Abstract Method interface) is an interface that contains **exactly one abstract method**.
+
+**Key Rules:**
+1.  **Exactly One Abstract Method:** This serves as the target for the Lambda Expression.
+2.  **Default Methods:** Allowed (Java 8+). They do not count toward the abstract method limit.
+3.  **Static Methods:** Allowed. They do not count toward the limit.
+4.  **Object Class Methods:** Methods from `java.lang.Object` (e.g., `toString`, `equals`) are excluded from the count.
+
+### Example of a Valid Functional Interface
+
+```java
+@FunctionalInterface
+interface Calculator {
+    // 1. The Single Abstract Method
+    int calculate(int a, int b);
+
+    // 2. Default methods (Ignored by the rule)
+    default void printInfo() {
+        System.out.println("This is a calculator.");
+    }
+
+    // 3. Static methods (Ignored by the rule)
+    static void version() {
+        System.out.println("v1.0");
+    }
+
+    // 4. Object class methods (Ignored by the rule)
+    @Override
+    String toString(); 
+}
+```
+
+### Usage with Lambda
+```java
+Calculator addition = (a, b) -> a + b;
+System.out.println(addition.calculate(10, 20)); // Output: 30
 ```
 
 ---
@@ -120,171 +118,138 @@ System.out.println(c.add(10, 20));
 ## 4. @FunctionalInterface Annotation
 
 ### Is It Mandatory?
+No. The annotation is **optional**. If an interface meets the criteria (1 abstract method), the compiler treats it as a functional interface automatically.
 
-No, it is **optional**, but **highly recommended**.
-
-### Why Use @FunctionalInterface?
-
-* Provides **compile-time safety**
-* Prevents accidental addition of multiple abstract methods
-* Improves readability and intent of the interface
+### Why Use It?
+1.  **Compiler Safety:** It prevents accidental addition of a second abstract method. The compiler will throw an error if the rule is violated.
+2.  **Documentation:** It explicitly tells other developers that this interface is intended for Lambdas.
 
 ```java
 @FunctionalInterface
 interface Test {
     void method();
-    // void anotherMethod(); // Compile-time error
+    // void anotherMethod(); // UNCOMMENTING THIS causes a Compilation Error
 }
 ```
 
 ---
 
-## 5. Predefined Functional Interfaces in Java
+## 5. Predefined Functional Interfaces (The Big 4)
 
-### Runnable Interface
+Java 8 provides the `java.util.function` package so developers don't have to write custom interfaces for common tasks.
 
-* Method: `run()`
-* Used in multithreading
+### Quick Reference Table
 
-```java
-Runnable r = () -> System.out.println("Thread running");
-new Thread(r).start();
-```
+| Interface | Method Signature | Input | Return Type | Usage / Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **Predicate\<T>** | `boolean test(T t)` | 1 (Type T) | `boolean` | **Conditional checks/Filters.** <br> *(e.g., is number even?)* |
+| **Function\<T, R>** | `R apply(T t)` | 1 (Type T) | `R` (Result) | **Transformation/Mapping.** <br> *(e.g., convert String to Integer)* |
+| **Consumer\<T>** | `void accept(T t)` | 1 (Type T) | `void` | **Consuming data.** <br> *(e.g., printing to console, saving to DB)* |
+| **Supplier\<T>** | `T get()` | None | `T` (Result) | **Factory/Generation.** <br> *(e.g., generate random ID)* |
+| **UnaryOperator\<T>**| `T apply(T t)` | 1 (Type T) | `T` | Input and Output types are same. |
+| **BinaryOperator\<T>**| `T apply(T t1, T t2)`| 2 (Type T) | `T` | Takes two inputs, returns one result (e.g., Sum). |
 
 ---
 
-### Comparable Interface
+## 6. Anonymous Class vs. Lambda Expressions
 
-* Method: `compareTo(Object o)`
-* Used for natural sorting in collections
+While both provide implementations for interfaces, they behave differently under the hood.
+
+### 1. The `this` Keyword (Lexical Scoping)
+*   **Anonymous Class:** `this` refers to the **anonymous object itself**.
+*   **Lambda Expression:** `this` refers to the **enclosing class instance**. Lambdas do not have their own "identity".
 
 ```java
-class Student implements Comparable<Student> {
-    int marks;
+public class ScopeTest {
+    public void test() {
+        // Anonymous Class
+        Runnable r1 = new Runnable() {
+            public void run() {
+                System.out.println(this); // Prints: ScopeTest$1 (The anonymous obj)
+            }
+        };
 
-    public int compareTo(Student s) {
-        return this.marks - s.marks;
+        // Lambda
+        Runnable r2 = () -> {
+            System.out.println(this); // Prints: ScopeTest (The outer class obj)
+        };
     }
 }
 ```
 
----
-
-### Comparator Interface
-
-* Method: `compare(Object o1, Object o2)`
-* Used for custom sorting
-
-```java
-Comparator<Integer> comp = (a, b) -> b - a;
-```
+### 2. Compilation
+*   **Anonymous Class:** Generates a separate `.class` file on disk (e.g., `Main$1.class`).
+*   **Lambda:** Does **not** generate a separate class file. It uses the `invokedynamic` instruction, making it more memory efficient.
 
 ---
 
-## 6. Anonymous Class
+## 7. Lambda Expressions Deep Dive
 
 ### Definition
+A Lambda expression is an anonymous function (no name, no modifier, no return type declaration) used to implement a Functional Interface.
 
-An **anonymous class** is a class without a name that is:
-
-* Defined and instantiated in **one step**
-
-### When to Use Anonymous Class
-
-* When a class is required only once
-* To override a method
-* To implement an interface temporarily
-
+### Syntax Rules
 ```java
-Runnable r = new Runnable() {
-    public void run() {
-        System.out.println("Anonymous class execution");
-    }
-};
+(parameter_list) -> { method_body }
 ```
 
----
-
-## 7. Lambda Expressions
-
-### Definition
-
-A **lambda expression** is:
-
-* An anonymous function
-* Used to implement a functional interface
-* Written without class name, method name, and boilerplate code
-
----
-
-### Syntax of Lambda Expression
+1.  **Parameter Types:** Optional (Type Inference).
+    *   `(int a, int b)` can be written as `(a, b)`.
+2.  **Parentheses `()`:**
+    *   Mandatory for 0 or >1 parameters: `() ->` or `(a,b) ->`.
+    *   Optional for exactly 1 parameter: `s ->`.
+3.  **Curly Braces `{}`:**
+    *   Optional for single-statement bodies.
+    *   Mandatory for multiple statements.
+4.  **Return Keyword:**
+    *   If `{}` is used, explicit `return` is required if the method returns a value.
+    *   If `{}` is NOT used, the value is returned automatically.
 
 ```java
-(parameters) -> expression
-```
-
-OR
-
-```java
-(parameters) -> {
-    // multiple statements
-}
-```
-
-### Example
-
-```java
-Runnable r = () -> System.out.println("Lambda running");
+// Valid Syntax Examples
+x -> x * x;                 // Implicit return
+(x, y) -> x + y;            // Implicit return
+(x, y) -> { return x + y; } // Explicit return required with {}
 ```
 
 ---
 
 ## 8. Limitations of Lambda Expressions
 
-### 1. Cannot Be Used with Abstract Classes
+1.  **Cannot be used with Abstract Classes:** Lambdas strictly target Interfaces.
+2.  **Cannot implement Interfaces with >1 Abstract Method:** The compiler cannot determine which method to map the code to.
+3.  **Variable Capture (Effectively Final):** Local variables used inside a lambda must not be modified.
+    ```java
+    int x = 10;
+    Runnable r = () -> System.out.println(x);
+    // x = 20; // ERROR: x must be effectively final
+    ```
 
-```java
-abstract class Test {
-    abstract void m1();
-}
+---
 
-Test t = () -> {}; // NOT ALLOWED
+## 9. Interview Related Crisp Questions
+
+**Q1: What is the primary difference between a Functional Interface and a Normal Interface?**
+> A Functional Interface has exactly one abstract method. A normal interface can have any number of abstract methods.
+
+**Q2: Can a Functional Interface contain Default and Static methods?**
+> Yes. The "single abstract method" rule applies only to abstract methods. You can have unlimited default or static methods.
+
+**Q3: What happens if I remove `@FunctionalInterface` from a valid SAM interface?**
+> Nothing breaks. The annotation is optional. It is just for compiler safety to prevent accidental addition of more abstract methods.
+
+**Q4: Can a Functional Interface extend another Interface?**
+> Yes, as long as the child interface still results in having exactly one abstract method (either inherited or overridden). If it adds a *new* abstract method, it is no longer a Functional Interface.
+
+**Q5: How does the `this` keyword behave differently in Lambdas vs Anonymous Classes?**
+> In an Anonymous Class, `this` refers to the anonymous instance. In a Lambda, `this` refers to the outer class instance (lexical scoping).
+
+**Q6: Why are Lambdas considered "lighter" than Anonymous Classes?**
+> Lambdas do not generate a separate `.class` file on disk. They use the `invokedynamic` bytecode instruction, which is more memory-efficient.
+
+**Q7: Which interface represents a function that takes a String and returns a Boolean?**
+> `Predicate<String>` or `Function<String, Boolean>`. Usually `Predicate` is preferred for conditional checks.
+
+**Q8: Can a Lambda expression throw a Checked Exception?**
+> Only if the Functional Interface's abstract method declares that exception in its `throws` clause. Otherwise, you must use a try-catch block inside the Lambda body.
 ```
-
-**Reason**
-Abstract classes may contain multiple abstract methods, and lambda expressions need exactly one target method.
-
----
-
-### 2. Cannot Be Used with Normal Classes
-
-* Lambda expressions do not create objects of classes
-* They only provide implementation for functional interfaces
-
----
-
-### 3. Cannot Be Used with Interfaces Having More Than One Abstract Method
-
-```java
-interface Test {
-    void m1();
-    void m2();
-}
-
-Test t = () -> {}; // NOT ALLOWED
-```
-
-**Reason**
-The compiler cannot determine which method the lambda expression should implement.
-
----
-
-## 9. Final Summary
-
-* Java 8 introduced functional programming features
-* Functional programming makes Java shorter, cleaner, faster, and modern
-* Functional Interface contains exactly one abstract method
-* Lambda expressions work only with functional interfaces
-* `@FunctionalInterface` improves safety and readability
-* Anonymous classes are verbose; lambda expressions are concise
-* Lambda expressions cannot be used with abstract classes, normal classes, or interfaces with multiple abstract methods

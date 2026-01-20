@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class Students implements Comparable<Students>{
+class Students implements Comparable<Students> {
 	int id;
 	String name;
 	double marks;
@@ -35,18 +35,23 @@ public class FIThree {
 		st.add(new Students(2, "Pramod", 90.5));
 		st.add(new Students(2, "Suraj", 55.5));
 		System.out.println(st);
+		
 		Collections.sort(st);
 		System.out.println("\n--Sorted by id--");
 		for (Students s : st) {
 			System.out.println(s);
 		}
+
+		Comparator<Students> shortByname = (s1,s2) -> s1.name.compareTo(s2.name);
 		
 		System.out.println("\n--Sorted by name--");
-		Collections.sort(st,Comparator.comparing(s -> s.name));
+		Collections.sort(st, shortByname);
 		for (Students s : st) {
 			System.out.println(s);
 		}
 		
+
+
 		System.out.println("\n--Sorted by marks--");
 		Collections.sort(st, Comparator.comparingDouble(s -> s.marks));
 		for (Students s : st) {
