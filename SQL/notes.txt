@@ -1,0 +1,9 @@
+WAQ to dispplay details of the employee working as analyst clerk or slaesman hired after 1980 in dep number 10, 30
+
+waq to dispay name job hiredate who is hired befire 1987 working as clerk or manegar but not woring in deptno 29, 30
+
+waq to diapy details of emp along with half term salary if they are earnign in the range of (1000 5000)  but they are not working as salesman or analyst
+
+
+if they are having salary more than 2000 and less than 6000
+1978 1986
