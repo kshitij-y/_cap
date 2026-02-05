@@ -202,6 +202,89 @@ select sal
 from emp
 group by sal;
 
+-- Q. number of time salries have been repeated in emp table
+select sal, count(sal) as count
+from emp
+group by sal;
+
+-- Q. query to display total salaries of emp working in each job if their job is clerk or salesman and they are hired in the year of 1981
+select sum(sal), job, count(job)
+from emp
+where
+	job in ('clerk', 'SALESMAN')
+    and hiredate like '1981%'
+group by job;
+
+-- Q. number of employee working ine ach dept if there are alleast 2 employees working in each dept
+select count(*) as total_emp, deptno
+from emp
+group by deptno
+having count(*) > 2;
+
+-- Q. display max and min of sal in each job if the max sal is greater than 3000
+select max(sal), min(sal), job
+from emp
+group by job
+having max(sal) > 3000;
+
+-- Q. display salaries that repeats more than one
+select sal as salary, count(sal) as sal_count
+from emp
+group by sal
+having count(sal) > 1;
+
+-- Q. Query to display maximum salary of emp in each job working as either analyst or clerk annd their deptno is 20 and max sal > 2000 and their sal is more than 1000
+select max(sal), job
+from emp
+where job in ('ANALYST', 'CLERK') and deptno = 20 and sal > 1000
+group by job
+having max(sal) > 2000;
+
+-- a query which in written inside another query is called subquery
+/*
+-- when/why do we subquery
+1. whenever we have a know or indrect condition in the question then we use the concecpt of subquery
+*/
+
+-- display emp earning less than jones sal
+select ename ,sal
+from emp 
+where sal > (
+	select sal from emp where ename = 'JONES'
+);
+
+-- display name of the employee along with annoual salary whoi are hired befiore james and earning more than 1000.
+select ename, sal*12 as annual_sal
+from emp
+where sal > 1000 and hiredate < (
+	select hiredate from emp where ename = 'james'
+);
+
+-- Q. display name deptno of emp working in james dept and earning more than 2000
+select ename, sal, deptno
+from emp
+where sal > 2000 and deptno = (
+	select deptno from emp where ename = 'james'
+);
+
+-- Q. display emp earning more than smith but less than king
+select * 
+from emp
+where sal > (select sal from emp where ename = 'smith') and sal < (select sal from emp where ename = 'king');
+
+/*
+same dept as james
+sal more than adams
+job same as miller
+hiredate after maritn
+*/
+select ename
+from emp
+where deptno = (select deptno from emp where ename = 'james')
+ and sal > (select sal from emp where ename = 'adams')
+ and job = (select job from emp where ename = 'miller')
+ and hiredate > (select hiredate from emp where ename = 'martin');
+ 
 
 
 
@@ -210,3 +293,5 @@ group by sal;
 
 
 
+
+-- 
