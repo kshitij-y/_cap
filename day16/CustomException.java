@@ -3,12 +3,12 @@ import java.util.Scanner;
 
 class NotEligibleException extends Exception {
 
-    public NotEligibleException(String msg){
-        System.out.println(msg);
+    public  NotEligibleException(String msg){
+        super(msg);
     }
 }
 
-public class CustomException {
+public class CustomException  {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

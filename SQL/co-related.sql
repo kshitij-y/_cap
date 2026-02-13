@@ -84,3 +84,15 @@ where substr(job, 1,1) in ('A', 'E', 'I', 'O', 'U');
 SELECT SUBSTRING_INDEX("Quadratically", "c", -3);
 SELECT INSTR("W3Schools.com", "3") AS MatchPosition;
 SELECT INSTR("YASHRAJ", "A");
+
+
+select 
+	ename
+from emp
+where INSTR(ename, "L") = 2;
+
+select ename, sal + coalesce(comm, 0) as total_sal
+ from emp;
+ 
+ 
+ 
